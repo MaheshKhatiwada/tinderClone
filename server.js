@@ -17,7 +17,7 @@ mongoose.connect(connection_url,{
     useNewUrlParser:true,
     useCreateIndex:true,
     useUnifiedTopology:true,
-    
+
 })
 
 
@@ -48,6 +48,14 @@ app.get('/tinder/cards',(req,res)=>{
         }
     })
 })
+
+if(process.env.NODE_ENV=='production'){
+    app.use(express.static("client/build"));
+    app.get('*',(req,res)=>{
+        res.sendFile(path.resolve(__dirname,'client','build','index.html'));
+    })
+
+}
 
 
 //Listners
